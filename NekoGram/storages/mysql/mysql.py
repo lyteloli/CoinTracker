@@ -193,9 +193,8 @@ class MySQLStorage(BaseStorage):
     async def get_last_message_id(self, user_id: int) -> Optional[int]:
         return (await self.get("""SELECT last_message_id FROM users WHERE id = %s""", user_id)).get('last_message_id')
 
-    async def create_user(self, user_id: int, custom_username: Optional[str] = None, language: Optional[str] = None):
+    async def create_user(self, user_id: int, language: Optional[str] = None):
         if language is None:
             language = self.default_language
 
-        await self.apply("""INSERT INTO users (id, lang, custom_username) VALUES (%s, %s, %s)""",
-                         (user_id, language, custom_username))
+        await self.apply("""INSERT INTO users (id, lang) VALUES (%s, %s)""", (user_id, language))

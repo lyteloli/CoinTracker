@@ -1,0 +1,51 @@
+{
+  "start": {
+    "text": "Hello, I can update you on cryptocurrency prices",
+    "markup": [
+      [{"text": "📊My subscriptions", "call_data": "menu_my_subs"}],
+      [{"text": "❔About", "call_data": "menu_about"}]
+    ]
+  },
+  "menu_about": {
+    "text": "Dummy about text",
+    "markup": [
+      [{"text": "⬅️Back", "call_data": "menu_start"}]
+    ]
+  },
+  "menu_my_subs": {
+    "text": "Please pick a currency",
+    "markup": [
+      [{"text": "💎Track a new currency", "call_data": "menu_new_sub"}],
+      [{"text": "⬅️Back", "call_data": "menu_start"}]
+    ]
+  },
+  "menu_new_sub": {
+    "text": "Please enter a coin symbol, name or CoinGecko ID that you would like to subscribe to",
+    "markup": [
+      [{"text": "⬅️Back"}]
+    ],
+    "markup_type": "reply",
+    "extras": {
+      "alt_text": "Coin not found"
+    },
+    "allowed_items": ["text"],
+    "back_menu": "menu_my_subs"
+  },
+  "menu_sub": {
+    "text": "<a href='{image}'>\u2060</a>💭<b>{name}</b> (<b>{symbol}</b>)\n👀CoinGecko ID: {id}\n💎Current price: ${price}\n📝Description:\n{description}",
+    "parse_mode": "HTML",
+    "markup": [
+      [{"text": "❌Unsubscribe", "call_data": "menu_unsubscribe"}],
+      [{"text": "⬅️Back", "call_data": "menu_my_subs"}]
+    ]
+  },
+  "price_update": {
+    "text": "Price alert!\n<b>{name}</b> (<b>{symbol}</b>) now costs <i><b>${price}</b></i>",
+    "markup": [
+      [{"text": "🆗", "call_data": "menu_start"}]
+    ],
+    "parse_mode": "HTML"
+  },
+  "menu_unsubscribe": {},
+  "wrong_content_type": {}
+}

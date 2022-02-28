@@ -46,7 +46,7 @@ class BaseStorage:
     async def get_last_message_id(self, user_id: int) -> Optional[int]:
         return 0
 
-    async def create_user(self, user_id: int, custom_username: Optional[str] = None, language: Optional[str] = None):
+    async def create_user(self, user_id: int, language: Optional[str] = None):
         if language is None:
             language = self.default_language
 
