@@ -8,6 +8,7 @@ api: API = API()
 
 @ROUTER.function()
 async def menu_new_sub(data: BuildResponse, message: types.Message, neko: Neko):
+    message.text = message.text.lower()
     coin = await neko.storage.get('SELECT id FROM coins WHERE id = %(query)s OR name = %(query)s OR symbol = %(query)s',
                                   dict(query=message.text))
     if coin:

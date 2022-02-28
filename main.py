@@ -11,6 +11,7 @@ loop = asyncio.get_event_loop()
 
 async def broadcast(coin_id: str):
     coin_data = await const.STORAGE.get('SELECT name, symbol, price FROM coins WHERE id = %s', coin_id)
+    coin_data['symbol'] = coin_data['symbol'].upper()
     async for user in const.STORAGE.select('SELECT user_id FROM user_subscriptions WHERE coin_id = %s', coin_id):
         data = await const.NEKO.build_text(text='price_update', user=types.User(id=user['user_id']),
                                            text_format=coin_data)

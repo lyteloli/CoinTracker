@@ -1,10 +1,12 @@
 {
   "start": {
-    "text": "Hello, I can update you on cryptocurrency prices",
+    "text": "Hello, I can update you on cryptocurrency prices\n\n<a href='https://github.com/lyteloli/NekoGram'>⚡️Powered by NekoGram</a>",
     "markup": [
       [{"text": "📊My subscriptions", "call_data": "menu_my_subs"}],
       [{"text": "❔About", "call_data": "menu_about"}]
-    ]
+    ],
+    "no_preview": true,
+    "parse_mode": "HTML"
   },
   "menu_about": {
     "text": "Dummy about text",
@@ -20,7 +22,7 @@
     ]
   },
   "menu_new_sub": {
-    "text": "Please enter a coin symbol, name or CoinGecko ID that you would like to subscribe to",
+    "text": "Please enter a coin symbol, name or <a href='https://www.coingecko.com/'>CoinGecko ID</a> that you would like to subscribe to",
     "markup": [
       [{"text": "⬅️Back"}]
     ],
@@ -28,11 +30,13 @@
     "extras": {
       "alt_text": "Coin not found"
     },
+    "no_preview": true,
+    "parse_mode": "HTML",
     "allowed_items": ["text"],
     "back_menu": "menu_my_subs"
   },
   "menu_sub": {
-    "text": "<a href='{image}'>\u2060</a>💭<b>{name}</b> (<b>{symbol}</b>)\n👀CoinGecko ID: {id}\n💎Current price: ${price}\n📝Description:\n{description}",
+    "text": "<a href='{image}'>\u2060</a>💭<b>{name}</b> (<b>{symbol}</b>)\n👀CoinGecko ID: {id}\n💎Current price: ${price}\n\n📝Description:\n{description}",
     "parse_mode": "HTML",
     "markup": [
       [{"text": "❌Unsubscribe", "call_data": "menu_unsubscribe"}],
