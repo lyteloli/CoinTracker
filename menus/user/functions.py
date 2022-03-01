@@ -9,11 +9,14 @@ api: API = API()
 @ROUTER.function()
 async def menu_new_sub(data: BuildResponse, message: types.Message, neko: Neko):
     message.text = message.text.lower()
+    user_subscribed = await neko.storage.check('SELECT id FROM user_subscriptions WHERE user_id = %s AND coin_id = %s',
+                                               (message.from_user.id, message.text))
     coin = await neko.storage.get('SELECT id FROM coins WHERE id = %(query)s OR name = %(query)s OR symbol = %(query)s',
                                   dict(query=message.text))
     if coin:
-        await neko.storage.apply('INSERT INTO user_subscriptions (user_id, coin_id) VALUES (%s, %s)',
-                                 (message.from_user.id, coin['id']))
+        if not user_subscribed:
+            await neko.storage.apply('INSERT INTO user_subscriptions (user_id, coin_id) VALUES (%s, %s)',
+                                     (message.from_user.id, coin['id']))
         data = await neko.build_text(text='menu_sub', user=message.from_user,
                                      formatter_extras={'call_data': coin['id']})
         await neko.storage.set_user_data(data={'selected_coin': coin['id']}, user_id=message.from_user.id)
@@ -27,8 +30,9 @@ async def menu_new_sub(data: BuildResponse, message: types.Message, neko: Neko):
             await neko.storage.apply('INSERT INTO coins (id, name, symbol, image, price, description) VALUES '
                                      '(%s, %s, %s, %s, %s, %s)', (coin.id, coin.name, coin.symbol, coin.image,
                                                                   coin.current_price, description))
-            await neko.storage.apply('INSERT INTO user_subscriptions (user_id, coin_id) VALUES (%s, %s)',
-                                     (message.from_user.id, coin.id))
+            if not user_subscribed:
+                await neko.storage.apply('INSERT INTO user_subscriptions (user_id, coin_id) VALUES (%s, %s)',
+                                         (message.from_user.id, coin.id))
             data = await neko.build_text(text='menu_sub', user=message.from_user,
                                          formatter_extras={'call_data': coin.id})
             await neko.storage.set_user_data(data={'selected_coin': coin.id}, user_id=message.from_user.id)
